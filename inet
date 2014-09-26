@@ -1,0 +1,179 @@
+makeoptions	MODULES_OVERRIDE="opensolaris zfs krpc acl_nfs4"
+cpu		HAMMER
+ident		inet
+#makeoptions	DEBUG=-gdwarf-2		# Build kernel with gdb(1) debug symbols
+makeoptions	WITH_CTF=1		# Run ctfconvert(1) for DTrace support
+options 	SCHED_ULE		# ULE scheduler
+options 	PREEMPTION		# Enable kernel thread preemption
+options 	INET			# InterNETworking
+options 	INET6			# IPv6 communications protocols
+options 	TCP_OFFLOAD		# TCP offload
+options 	SCTP			# Stream Control Transmission Protocol
+options 	FFS			# Berkeley Fast Filesystem
+options 	SOFTUPDATES		# Enable FFS soft updates support
+options 	MD_ROOT			# MD is a potential root device
+options 	NFSCL			# New Network Filesystem Client
+options 	NFSD			# New Network Filesystem Server
+options 	NFSLOCKD		# Network Lock Manager
+options 	NFS_ROOT		# NFS usable as /, requires NFSCL
+options 	MSDOSFS			# MSDOS Filesystem
+options		TMPFS
+					# SMB support
+options         NETSMB
+options         LIBMCHAIN
+options         LIBICONV
+options	        SMBFS
+options 	CD9660			# ISO 9660 Filesystem
+options 	PROCFS			# Process filesystem (requires PSEUDOFS)
+options 	PSEUDOFS		# Pseudo-filesystem framework
+options 	GEOM_PART_GPT		# GUID Partition Tables.
+options 	GEOM_RAID		# Soft RAID functionality.
+options 	GEOM_LABEL		# Provides labelization
+options 	SCSI_DELAY=5000		# Delay (in ms) before probing SCSI
+options 	KTRACE			# ktrace(1) support
+options 	STACK			# stack(9) support
+options 	SYSVSHM			# SYSV-style shared memory
+options 	SYSVMSG			# SYSV-style message queues
+options 	SYSVSEM			# SYSV-style semaphores
+options 	_KPOSIX_PRIORITY_SCHEDULING # POSIX P1003_1B real-time extensions
+options 	PRINTF_BUFR_SIZE=128	# Prevent printf output being interspersed.
+options 	KBD_INSTALL_CDEV	# install a CDEV entry in /dev
+options 	HWPMC_HOOKS		# Necessary kernel hooks for hwpmc(4)
+options 	AUDIT			# Security event auditing
+options 	CAPABILITY_MODE		# Capsicum capability mode
+options 	CAPABILITIES		# Capsicum capabilities
+options 	PROCDESC		# Support for process descriptors
+options 	MAC			# TrustedBSD MAC Framework
+options 	KDTRACE_FRAME		# Ensure frames are compiled in
+options 	KDTRACE_HOOKS		# Kernel DTrace hooks
+options 	DDB_CTF			# Kernel ELF linker loads CTF data
+options 	INCLUDE_CONFIG_FILE     # Include this file in kernel
+# Debugging support.  Always need this:
+options 	KDB			# Enable kernel debugger support.
+options 	KDB_TRACE		# Print a stack trace for a panic.
+# Make an SMP-capable kernel by default
+options 	SMP			# Symmetric MultiProcessor Kernel
+# CPU frequency control
+device		cpufreq
+# Bus support.
+device		acpi
+options 	ACPI_DMAR
+device		pci
+# Floppy drives
+# ATA controllers
+device		ahci		# AHCI-compatible SATA controllers
+device		ata		# Legacy ATA/SATA controllers
+options 	ATA_STATIC_ID	# Static device numbering
+# SCSI Controllers
+					# output.  Adds ~128k to driver.
+					# output.  Adds ~215k to driver.
+device		mpt		# LSI-Logic MPT-Fusion
+device		mps		# LSI-Logic MPT-Fusion 2
+# ATA/SCSI peripherals
+device		scbus		# SCSI bus (required for ATA/SCSI)
+device		da		# Direct Access (disks)
+device		pass		# Passthrough device (direct ATA/SCSI access)
+# RAID controllers interfaced to the SCSI subsystem
+#XXX it is not 64-bit clean, -scottl
+# RAID controllers
+#XXX pointer/int warnings
+# atkbdc0 controls both the keyboard and the PS/2 mouse
+device		atkbdc		# AT keyboard controller
+device		atkbd		# AT keyboard
+device		psm		# PS/2 mouse
+device		kbdmux		# keyboard multiplexer
+device		vga		# VGA video card driver
+options 	VESA		# Add support for VESA BIOS Extensions (VBE)
+device		splash		# Splash screen and screen saver support
+# syscons is the default console driver, resembling an SCO console
+device		sc
+options 	SC_PIXEL_MODE	# add support for the raster text mode
+# PCCARD (PCMCIA) support
+# PCMCIA and cardbus bridge support
+# Serial (COM) ports
+# Parallel port
+device		puc		# Multi I/O cards and multi-channel UARTs
+# PCI Ethernet NICs.
+device		em		# Intel PRO/1000 Gigabit Ethernet Family
+# PCI Ethernet NICs that use the common MII bus controller code.
+# NOTE: Be sure to keep the 'device miibus' line in order to use these NICs!
+device		miibus		# MII bus support
+# ISA Ethernet NICs.  pccard NICs included.
+# 'device ed' requires 'device miibus'
+# Wireless NIC cards
+# Pseudo devices.
+device		loop		# Network loopback
+device		random		# Entropy device
+device		ether		# Ethernet support
+device		vlan		# 802.1Q VLAN support
+device		tun		# Packet tunnel.
+device		md		# Memory "disks"
+device		gif		# IPv6 and IPv4 tunneling
+device		faith		# IPv6-to-IPv4 relaying (translation)
+device		firmware	# firmware assist module
+# The `bpf' device enables the Berkeley Packet Filter.
+# Be aware of the administrative consequences of enabling this!
+# Note that 'bpf' is required for DHCP.
+device		bpf		# Berkeley packet filter
+# USB support
+options 	USB_DEBUG	# enable debug msgs
+device		uhci		# UHCI PCI->USB interface
+device		ohci		# OHCI PCI->USB interface
+device		ehci		# EHCI PCI->USB interface (USB 2.0)
+device		xhci		# XHCI PCI->USB interface (USB 3.0)
+device		usb		# USB Bus (required)
+device		ukbd		# Keyboard
+device		umass		# Disks/Mass storage - Requires scbus and da
+# Sound support
+# MMC/SD
+device		mmc		# MMC/SD bus
+device		mmcsd		# MMC/SD memory card
+device		sdhci		# Generic PCI SD Host Controller
+# VirtIO support
+device		virtio		# Generic VirtIO bus (required)
+device		virtio_pci	# VirtIO PCI device
+device		vtnet		# VirtIO Ethernet device
+device		virtio_blk	# VirtIO Block device
+device		virtio_scsi	# VirtIO SCSI device
+device		virtio_balloon	# VirtIO Memory Balloon device
+# HyperV drivers
+# Xen HVM Guest Optimizations
+# NOTE: XENHVM depends on xenpci.  They must be added or removed together.
+# VMware support
+device		vmx		# VMware VMXNET3 Ethernet
+device		coretemp
+# netgraph options
+options		HZ=1000
+options		NETGRAPH
+options		NETGRAPH_PPPOE
+options		NETGRAPH_SOCKET
+options		NETGRAPH_CISCO
+options		NETGRAPH_ECHO
+options		NETGRAPH_FRAME_RELAY
+options		NETGRAPH_HOLE
+options		NETGRAPH_KSOCKET
+options		NETGRAPH_LMI
+options		NETGRAPH_RFC1490
+options		NETGRAPH_TTY
+options		NETGRAPH_ASYNC
+options		NETGRAPH_BPF
+options		NETGRAPH_ETHER
+options		NETGRAPH_IFACE
+options		NETGRAPH_KSOCKET
+options		NETGRAPH_L2TP
+options		NETGRAPH_MPPC_ENCRYPTION
+options		NETGRAPH_PPP
+options		NETGRAPH_PPTPGRE
+options		NETGRAPH_TEE
+options		NETGRAPH_UI
+options		NETGRAPH_VJC
+device		pf
+device		pflog
+device		pfsync
+options         ALTQ
+options         ALTQ_CBQ        # Class Bases Queuing (CBQ)
+options         ALTQ_RED        # Random Early Detection (RED)
+options         ALTQ_RIO        # RED In/Out
+options         ALTQ_HFSC       # Hierarchical Packet Scheduler (HFSC)
+options         ALTQ_PRIQ       # Priority Queuing (PRIQ)
+options         ALTQ_NOPCC      # Required for SMP build
